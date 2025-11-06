@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amenities</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='general_style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Amenities</h1>
+      <form method="POST" class="amenities-form">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.name.label }}<br />
+          {{ form.name(class="input-field") }}
+        </div>
+        <div class="form-group">{{ form.submit(class="btn") }}</div>
+      </form>
+
+      <div class="distance-box">
+        <h2>Current Distance</h2>
+        <p id="distance-value">0.00 m</p>
+      </div>
+    </div>
+
+    <script>
+      async function fetchDistance() {
+        try {
+          const response = await fetch("/fetch_distance");
+          if (!response.ok) throw new Error("Response was not ok");
+
+          const data = await response.json();
+
+          document.getElementById("distance-value").textContent = `${data.distance.toFixed(2)} m`;
+        } catch (err) {
+          console.error("Error fetching distance:", err);
+        }
+      }
+
+      setInterval(fetchDistance, 500);
+    </script>
+  </body>
+</html>
