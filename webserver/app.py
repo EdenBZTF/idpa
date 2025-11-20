@@ -2,6 +2,10 @@ from flask import Flask, render_template
 from forms.Forms import AmenityForm 
 import random
 import csv
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "amenities.csv")
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  
@@ -9,7 +13,7 @@ app.secret_key = 'supersecretkey'
 @app.route('/', methods=['GET', 'POST'])
 def home():
     objects = []
-    with open(file='amenities.csv', mode='r') as f:
+    with open(file=CSV_PATH, mode='r') as f:
         reader = csv.reader(f, delimiter=',')
         for i in reader:
             objects.append(i[0])
