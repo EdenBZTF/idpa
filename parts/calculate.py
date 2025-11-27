@@ -3,4 +3,4 @@ from parts.Gps import get_current_location
 
 def calculate_distance(cords):
     my_location = get_current_location()
-    return geodesic(my_location, cords).meters
+    return round(geodesic(my_location, cords).meters, 1)

@@ -1,3 +1,6 @@
 Flask==3.0.0
 WTForms==3.1.1
 Flask_WTF==1.2.1
+requests==2.32.5
+geopy==2.4.1
+jsonify==0.5

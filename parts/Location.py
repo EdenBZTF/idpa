@@ -12,7 +12,7 @@ def get_nearest_amenity(amenity):
     """
 
     url = "http://overpass-api.de/api/interpreter"
-    response = requests.get(url, params={'data': query})
+    response = requests.get(url, params={'data': query}, timeout=10)
     data = response.json()
 
     nearest = None

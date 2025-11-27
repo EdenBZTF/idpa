@@ -1,62 +1,63 @@
-from flask import Flask, render_template, session
-from forms.Forms import AmenityForm 
-import random
+from flask import Flask, render_template, request, jsonify
+from forms.Forms import AmenityForm
+
 import csv
 import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
+from parts import Calculate
+from parts import Location
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "amenities.csv")
+
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  
+app.secret_key = 'supersecretkey'
+
+current_amenity = "bench"
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    global current_amenity
+
     objects = []
-    # Read CSV and add "selected" column if missing
-    amenities = []
     with open(CSV_PATH, mode='r', newline='') as f:
-        reader = csv.DictReader(f)
-        fieldnames = reader.fieldnames
-        if 'selected' not in fieldnames:
-            fieldnames.append('selected')
+        reader = csv.reader(f, delimiter=',')
         for row in reader:
-            if 'selected' not in row:
-                row['selected'] = '0'
-            amenities.append(row)
-            objects.append(row['name'])
-    
+            objects.append(row[0])
+
     form = AmenityForm()
     form.name.choices = objects
-    
-    if form.validate_on_submit():
-        set_amenity(str(form.name.data))
-        update_csv_selection(str(form.name.data), amenities, fieldnames)
-        print(get_amenity())
-    
-    return render_template('index.html', objects=objects, form=form)
 
+    if form.validate_on_submit():
+        current_amenity = str(form.name.data)
+        print("Amenity set to:", current_amenity)
+
+    return render_template('index.html', objects=objects, form=form)
 
 @app.route('/fetch_distance')
 def fetch_distance():
-    distance = random.randint(0,100)
-    print(distance)
-    return '{ "distance": ' + str(distance) + ' }'
-
-def set_amenity(n):
-    session["amenity"] = n
-
-def get_amenity():
-    return session.get("amenity", "")
-
-def update_csv_selection(selected_name, amenities, fieldnames):
-    """Update CSV to mark the selected amenity."""
-    for row in amenities:
-        row['selected'] = '1' if row['name'] == selected_name else '0'
+    if current_amenity is None:
+        return "Bitte wähle etwas aus"
     
-    with open(CSV_PATH, mode='w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(amenities)
+    try:
+        amenity_data = Location.get_nearest_amenity(current_amenity)
+        if amenity_data is None:
+            return jsonify({"error": "Keine Daten verfügbar"}), 500
+
+        dist = Calculate.calculate_distance(amenity_data)
+        return jsonify({"distance": dist})
+    except Exception as e:
+        print(f"Error in fetch_distance: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/get_amenity')
+def get_amenity():
+    return jsonify({"amenity": current_amenity or "bench"})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
