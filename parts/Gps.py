@@ -1,2 +1,5 @@
+from parts.mock import MockGPS
+
 def get_current_location():
-    return(47.3769, 8.5417)
+    data = MockGPS().read()
+    return (data["latitude"], data["longitude"])

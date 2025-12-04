@@ -1,6 +1,6 @@
-from parts import Location 
-from parts import Calculate
+from parts import Location, Calculate, Gps, Stepper, Compass
 import requests
+import time
 
 AMENITY_URL = "http://127.0.0.1:5000/get_amenity"   
 
@@ -14,14 +14,23 @@ def get_current_amenity():
     return None
 
 def main():
-    current = get_current_amenity()
-    print("Current amenity:", current)
-
-    coords = Location.get_nearest_amenity(current)
-    print("Coordinates:", coords)
-
-    dist = Calculate.calculate_distance(coords)
-    print("Distance:", dist)
+    try:
+        while True:
+            print('pre 1')
+            current = get_current_amenity()
+            print("Current amenity:", current)
+            print('pre 2')
+            coords = Location.get_nearest_amenity(current)
+            print("Coordinates:", coords)
+            if coords:
+                print('pre 3')
+                dist = Calculate.calculate_distance(coords)
+                print("Distance:", dist)
+                bearing = Calculate.calculate_bearing(coords)
+                print(bearing)
+            time.sleep(3)
+    except Exception as e:
+        print(e)
 
 if __name__ == '__main__':
     main()

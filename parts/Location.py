@@ -11,10 +11,15 @@ def get_nearest_amenity(amenity):
     out;
     """
 
-    url = "http://overpass-api.de/api/interpreter"
-    response = requests.get(url, params={'data': query}, timeout=10)
-    data = response.json()
+    url = "https://overpass.osm.ch/api/interpreter"
+    # url = "https://overpass-api.de/api/interpreter"
 
+    try:
+        response = requests.get(url, params={'data': query}, timeout=10)
+        data = response.json()
+    except Exception as e:
+        print("Error fetching data from Overpass API:", e)
+        data = {"elements": []}
     nearest = None
     min_dist = float("inf")
 
