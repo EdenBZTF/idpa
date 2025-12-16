@@ -70,6 +70,7 @@ def main():
 
             # Wo SOLL die Nadel stehen?
             target_needle_angle = (bearing_to_target - heading) % 360
+            target_needle_angle -= 180 # keiner Weiss warum aber bitte
 
             # --- 5️⃣ Drehung berechnen ---
             delta = shortest_rotation(target_needle_angle, current_needle_angle)
