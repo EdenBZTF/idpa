@@ -26,14 +26,12 @@ def draw_OLED(distance, bearing):
         from PIL import ImageFont as IF
         font = IF.load_default()
 
-    while True:
-        with canvas(device) as draw:
-            draw.rectangle(device.bounding_box, outline="white", fill="black")
-            draw.text((6, 6),  "Ziel-Distanz:", font=font, fill="white")
-            draw.text((6, 24), f"{distance:.1f} m", font=font, fill="white")
-            draw.text((6, 42), f"Peilung: {bearing:.1f}°", font=font, fill="white")
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white", fill="black")
+        draw.text((6, 6),  "Ziel-Distanz:", font=font, fill="white")
+        draw.text((6, 24), f"{distance:.1f} m", font=font, fill="white")
+        draw.text((6, 42), f"Peilung: {bearing:.1f}°", font=font, fill="white")
 
-        time.sleep(0.5)
 
 
    
