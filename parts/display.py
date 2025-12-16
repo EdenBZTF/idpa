@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -9,9 +8,9 @@ from luma.core.render import canvas
 from luma.oled.device import sh1106
 from luma.core.error import DeviceNotFoundError
 
-from Gps import get_current_location
+from .Gps import get_current_location
 
-from calculate import calculate_distance, calculate_bearing
+from .calculate import calculate_distance, calculate_bearing
 
 def draw_OLED():
 

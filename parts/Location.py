@@ -1,5 +1,5 @@
 import requests
-from Gps import get_current_location
+from .Gps import get_current_location
 from geopy.distance import geodesic
 
 def get_nearest_amenity(amenity):
