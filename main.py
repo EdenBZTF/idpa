@@ -27,6 +27,7 @@ def main():
                 dist = calculate.calculate_distance(coords)
                 print("Distance:", dist)
                 bearing = calculate.calculate_bearing(coords)
+                display.draw_OLED(dist, bearing)
                 print("Drehe um: ", bearing)
                 stepper.rotate_degrees(bearing, 800)
             time.sleep(3)
@@ -35,4 +36,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    display.draw_OLED()

@@ -12,9 +12,7 @@ from .Gps import get_current_location
 
 from .calculate import calculate_distance, calculate_bearing
 
-def draw_OLED():
-
-    TARGET = (47.49853522404578, 9.418950564036795) #mc arbon
+def draw_OLED(distance, bearing):
 
     serial = i2c(port=1, address=0x3C)  # SH1106 ist oft auch 0x3C
     try:
@@ -29,13 +27,10 @@ def draw_OLED():
         font = IF.load_default()
 
     while True:
-        meters = calculate_distance(TARGET)
-        bearing = calculate_bearing(TARGET)
-
         with canvas(device) as draw:
             draw.rectangle(device.bounding_box, outline="white", fill="black")
             draw.text((6, 6),  "Ziel-Distanz:", font=font, fill="white")
-            draw.text((6, 24), f"{meters:.1f} m", font=font, fill="white")
+            draw.text((6, 24), f"{distance:.1f} m", font=font, fill="white")
             draw.text((6, 42), f"Peilung: {bearing:.1f}°", font=font, fill="white")
 
         time.sleep(0.5)
