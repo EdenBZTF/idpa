@@ -70,8 +70,7 @@ def main():
 
             # Wo SOLL die Nadel stehen?
             target_needle_angle = (bearing_to_target - heading) % 360
-            if target_needle_angle > 180:
-                target_needle_angle -= 360  # Normalize to -180 to +180
+            target_needle_angle -= 180 # keiner Weiss warum aber bitte
 
             # --- 5️⃣ Drehung berechnen ---
             delta = shortest_rotation(target_needle_angle, current_needle_angle)
@@ -81,15 +80,10 @@ def main():
             print(f"Zielwinkel: {target_needle_angle:.1f}°")
             print(f"Drehung nötig: {delta:.1f}°")
 
-           # --- 6️⃣ Drehen (nur wenn nötig) ---
+            # --- 6️⃣ Drehen (nur wenn nötig) ---
             if abs(delta) > DEADZONE_DEGREES:
                 stepper.rotate_degrees(delta, 1000)
-                current_needle_angle += delta
-                # Normalize to -180 to +180
-                if current_needle_angle > 180:
-                    current_needle_angle -= 360
-                elif current_needle_angle < -180:
-                    current_needle_angle += 360
+                current_needle_angle = (current_needle_angle + delta) % 360
             else:
                 print("Innerhalb Deadzone – keine Drehung")
 
