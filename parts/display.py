@@ -1,34 +1,21 @@
-from luma.core.interface.serial import i2c
-from luma.oled.device import ssd1306
+import time
+from luma.core.interface.serial import i2c, spi, pcf8574
+from luma.core.interface.parallel import bitbang_6800
 from luma.core.render import canvas
+from luma.oled.device import sh1106
 from PIL import ImageFont
-import subprocess
 
-# I2C-Scan durchführen
-print("Scanne I²C-Bus...")
-scan = subprocess.check_output(["i2cdetect", "-y", "1"]).decode()
-address = None
-for line in scan.splitlines():
-    if "3c" in line.lower():
-        address = 0x3C
-    elif "3d" in line.lower():
-        address = 0x3D
+serial = i2c(port=1, address=0x3C)
 
-if address is None:
-    print("Kein OLED-Display gefunden! Bitte Verkabelung prüfen.")
-    exit(1)
+device = sh1106(serial)
 
-print(f"OLED gefunden auf Adresse: {hex(address)}")
+font = ImageFont.truetype('FreeSans.ttf', 18)
 
-# OLED initialisieren
-serial = i2c(port=1, address=address)
-device = ssd1306(serial)
+try:
+   while True:
+      with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white", fill="black")
+        draw.text((15, 20), "Hello World!", font=font, fill="white")
 
-# Schriftart laden
-font = ImageFont.load_default()
-
-# Testanzeige
-with canvas(device) as draw:
-    draw.text((10, 10), "Hello OLED!", font=font, fill="white")
-    draw.text((10, 30), f"Addr: {hex(address)}", font=font, fill="white")
-
+except KeyboardInterrupt:
+  print("Programm wurde beendet!")
