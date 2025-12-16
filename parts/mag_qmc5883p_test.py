@@ -1,24 +1,33 @@
-import time, math
+# SPDX-FileCopyrightText: Copyright (c) 2025 Liz Clark for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
+"""QMC5333P Simple Test"""
+
+import time
+
 import board
-import busio
+
 import adafruit_qmc5883p
 
-# I2C initialisieren
-i2c = busio.I2C(board.SCL, board.SDA)
+i2c = board.I2C()
+# i2c = board.STEMMA_I2C()
 
-# Sensor an Adresse 0x2C
-sensor = adafruit_qmc5883p.QMC5883P(i2c, address=0x2C)
+sensor = adafruit_qmc5883p.QMC5883P(i2c)
 
-# Optional: Betriebsparameter setzen (siehe Doku)
-sensor.mode = adafruit_qmc5883p.MODE_CONTINUOUS
-sensor.data_rate = adafruit_qmc5883p.ODR_200HZ
-sensor.range = adafruit_qmc5883p.RANGE_2G       # feinster Bereich
-sensor.oversample_ratio = adafruit_qmc5883p.OSR_8
-sensor.downsample_ratio = adafruit_qmc5883p.DSR_1
+# configure sensor settings
+# defaults to MODE_NORMAL, ODR_50HZ, RANGE_8G
 
-print("QMC5883P läuft auf 0x2C, Messwerte in µT. Strg+C zum Beenden.")
+# sensor.mode = adafruit_qmc5883p.MODE_CONTINUOUS
+# sensor.data_rate = adafruit_qmc5883p.ODR_10HZ
+# sensor.range = adafruit_qmc5883p.RANGE_2G
+
+print("QMC5883P Magnetometer Test")
+print("-" * 40)
+
 while True:
-    mx, my, mz = sensor.magnetic  # µT (Microtesla)
-    # Heading (0..360°), ggf. Achsen je nach Einbauausrichtung tauschen
-    heading = (math.degrees(math.atan2(my, mx)) + 360.0) % 360.0
-    print(f"X={mx:7.2f} µT    print(f"X={mx:7.2f} µT  Y={my:7.2f} µT  Z={mz:7.2f} µT  Heading={heading:6.1f}°")
+    mag_x, mag_y, mag_z = sensor.magnetic
+
+    print(f"X:{mag_x:2.3f}, Y:{mag_y:2.3f}, Z:{mag_z:2.3f} G")
+
+    time.sleep(1)
