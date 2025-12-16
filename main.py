@@ -1,4 +1,4 @@
-from parts import Location, Calculate, Gps, Stepper, Compass
+from parts import Location, calculate, Gps, Stepper, Compass
 import requests
 import time
 
@@ -17,16 +17,16 @@ def main():
     try:
         while True:
             print('pre 1')
-            current = get_current_amenity()
+            current = 'bar'
             print("Current amenity:", current)
             print('pre 2')
             coords = Location.get_nearest_amenity(current)
             print("Coordinates:", coords)
             if coords:
                 print('pre 3')
-                dist = Calculate.calculate_distance(coords)
+                dist = calculate.calculate_distance(coords)
                 print("Distance:", dist)
-                bearing = Calculate.calculate_bearing(coords)
+                bearing = calculate.calculate_bearing(coords)
                 print(bearing)
             time.sleep(3)
     except Exception as e:

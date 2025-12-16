@@ -9,9 +9,11 @@ from luma.core.render import canvas
 from luma.oled.device import sh1106
 from luma.core.error import DeviceNotFoundError
 
+from Gps import get_current_location
+
 from calculate import calculate_distance, calculate_bearing
 
-TARGET = (47.516026683178936, 9.433168679327174)  # denner arbon
+TARGET = get_current_location() #bztf?
 
 serial = i2c(port=1, address=0x3C)  # SH1106 ist oft auch 0x3C
 try:
