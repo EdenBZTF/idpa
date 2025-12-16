@@ -21,7 +21,8 @@ def calculate_bearing(target_coords):
     y = math.cos(lat1) * math.sin(lat2) - \
         math.sin(lat1) * math.cos(lat2) * math.cos(dLon)
 
-    bearing_rad = math.atan2(x, y)
+    # bearing_rad = math.atan2(x, y) 
+    bearing_rad = math.atan2(y, x)
     bearing_deg = math.degrees(bearing_rad)
 
     bearing_deg = (bearing_deg + 360) % 360
