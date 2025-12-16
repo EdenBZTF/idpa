@@ -90,7 +90,8 @@ def main():
             # --- 6️⃣ Drehen (nur wenn nötig) ---
             if abs(delta) > DEADZONE_DEGREES:
                 print(f"Drehe Nadel um {delta:.1f}°. Current: {current_needle_angle:.1f}° → Target: {target_needle_angle:.1f}°")
-                stepper.rotate_degrees(delta, 1000)
+                # stepper.rotate_degrees(delta, 1000)
+                stepper.rotate_degrees(-delta, 1000)  # Korrektur
                 current_needle_angle = (current_needle_angle + delta) % 360
             else:
                 print("Innerhalb Deadzone – keine Drehung")
