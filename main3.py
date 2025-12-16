@@ -65,12 +65,19 @@ def main():
             distance = calculate.calculate_distance(target_coords)
             bearing_to_target = calculate.calculate_bearing(target_coords)
 
+            current_heading = 0
+            
+            for _ in range(25):
+                current_heading += compass.get_heading()
+                time.sleep(0.2)
+            current_heading /= 25
+            print(f"Aktueller Kompasswert (gemittelt): {current_heading:.1f}°")
+            
             # --- 4️⃣ Kompass ---
-            heading = (compass.get_heading() + COMPASS_OFFSET) % 360
+            heading = (current_heading + COMPASS_OFFSET) % 360
 
             # Wo SOLL die Nadel stehen?
             target_needle_angle = (bearing_to_target - heading) % 360
-            target_needle_angle -= 180 # keiner Weiss warum aber bitte
 
             # --- 5️⃣ Drehung berechnen ---
             delta = shortest_rotation(target_needle_angle, current_needle_angle)
@@ -82,6 +89,7 @@ def main():
 
             # --- 6️⃣ Drehen (nur wenn nötig) ---
             if abs(delta) > DEADZONE_DEGREES:
+                print(f"Drehe Nadel um {delta:.1f}°. Current: {current_needle_angle:.1f}° → Target: {target_needle_angle:.1f}°")
                 stepper.rotate_degrees(delta, 1000)
                 current_needle_angle = (current_needle_angle + delta) % 360
             else:
@@ -99,5 +107,5 @@ def main():
         print("Fehler:", e)
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
