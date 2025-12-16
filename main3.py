@@ -67,10 +67,10 @@ def main():
 
             current_heading = 0
             
-            for _ in range(25):
+            for _ in range(50):
                 current_heading += compass.get_heading()
                 time.sleep(0.2)
-            current_heading /= 25
+            current_heading /= 50
             print(f"Aktueller Kompasswert (gemittelt): {current_heading:.1f}°")
             
             # --- 4️⃣ Kompass ---
