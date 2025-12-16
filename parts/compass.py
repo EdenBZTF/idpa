@@ -44,7 +44,7 @@ def get_raw_magnet():
     y -= Y_OFFSET
     z -= Z_OFFSET
 
-       return x, y, z
+    return x, y, z
 
 def get_heading():
     """
@@ -53,3 +53,5 @@ def get_heading():
     """
     x, y, _ = get_raw_magnet()
     angle_rad = math.atan2(y, x)
+    return (angle_deg + 360) % 360
+    
