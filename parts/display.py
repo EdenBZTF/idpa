@@ -9,7 +9,7 @@ from luma.core.render import canvas
 from luma.oled.device import sh1106
 from luma.core.error import DeviceNotFoundError
 
-from parts.calculate_distance import calculate_distance, calculate_bearing
+from calculate import calculate_distance, calculate_bearing
 
 TARGET = (47.516026683178936, 9.433168679327174)  # denner arbon
 
@@ -18,7 +18,6 @@ try:
     device = sh1106(serial)
 except DeviceNotFoundError:
     print("OLED (SH1106) auf 0x3C nicht gefunden – prüfe Adresse/Verkabelung.")
-    return
 
 try:
     font = ImageFont.truetype("FreeSans.ttf", 16)

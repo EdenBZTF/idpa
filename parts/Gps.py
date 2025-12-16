@@ -1,4 +1,4 @@
-from parts.mock import MockGPS
+from mock import MockGPS
 
 def get_current_location():
     data = MockGPS().read()
