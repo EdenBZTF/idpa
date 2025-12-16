@@ -28,11 +28,11 @@ def main():
                 print("Distance:", dist)
                 bearing = calculate.calculate_bearing(coords)
                 print("Drehe um: ", bearing)
-                rotate_degrees(bearing, 800)
+                stepper.rotate_degrees(bearing, 800)
             time.sleep(3)
     except Exception as e:
         print(e)
 
 if __name__ == '__main__':
     main()
-    draw_OLED()
+    display.draw_OLED()
