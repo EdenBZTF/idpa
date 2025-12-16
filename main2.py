@@ -51,6 +51,9 @@ def main():
                 time.sleep(UPDATE_INTERVAL)
                 continue
 
+            print("Zielkoordinaten:", target_coords)
+            print("meine Koordinaten:", Gps.get_current_location())
+
             # --- 2️⃣ Eigene Position ---
             location_now = Gps.get_current_location()
             if not location_now:
