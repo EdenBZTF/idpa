@@ -42,7 +42,7 @@ def main():
     try:
         while True:
             # --- 1️⃣ Ziel ---
-            amenity = get_current_amenity() or "bar"
+            amenity = "bar"
             print("\nAktuelles Ziel:", amenity)
 
             target_coords = Location.get_nearest_amenity(amenity)
