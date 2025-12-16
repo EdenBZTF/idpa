@@ -1,4 +1,4 @@
-from parts import Location, calculate, Gps, Stepper, Compass, display
+from parts import Location, calculate, Gps, stepper, Compass, display
 import requests
 import time
 
@@ -27,7 +27,8 @@ def main():
                 dist = calculate.calculate_distance(coords)
                 print("Distance:", dist)
                 bearing = calculate.calculate_bearing(coords)
-                print(bearing)
+                print("Drehe um: ", bearing)
+                rotate_degrees(bearing, 800)
             time.sleep(3)
     except Exception as e:
         print(e)
