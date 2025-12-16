@@ -1,4 +1,4 @@
-from parts import Location, calculate, Gps, Stepper, Compass
+from parts import Location, calculate, Gps, Stepper, Compass, display
 import requests
 import time
 
@@ -34,3 +34,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    draw_OLED()

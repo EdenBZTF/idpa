@@ -13,36 +13,34 @@ from Gps import get_current_location
 
 from calculate import calculate_distance, calculate_bearing
 
-TARGET = get_current_location() #bztf?
+def draw_OLED():
 
-serial = i2c(port=1, address=0x3C)  # SH1106 ist oft auch 0x3C
-try:
-    device = sh1106(serial)
-except DeviceNotFoundError:
-    print("OLED (SH1106) auf 0x3C nicht gefunden – prüfe Adresse/Verkabelung.")
+    TARGET = get_current_location() #bztf?
 
-try:
-    font = ImageFont.truetype("FreeSans.ttf", 16)
-except Exception:
-    from PIL import ImageFont as IF
-    font = IF.load_default()
+    serial = i2c(port=1, address=0x3C)  # SH1106 ist oft auch 0x3C
+    try:
+        device = sh1106(serial)
+    except DeviceNotFoundError:
+        print("OLED (SH1106) auf 0x3C nicht gefunden – prüfe Adresse/Verkabelung.")
 
-try:
-    while True:
-        meters = calculate_distance(TARGET)
-        bearing = calculate_bearing(TARGET)
+    try:
+        font = ImageFont.truetype("FreeSans.ttf", 16)
+    except Exception:
+        from PIL import ImageFont as IF
+        font = IF.load_default()
 
-        with canvas(device) as draw:
-            draw.rectangle(device.bounding_box, outline="white", fill="black")
-            draw.text((6, 6),  "Ziel-Distanz:", font=font, fill="white")
-            draw.text((6, 24), f"{meters:.1f} m", font=font, fill="white")
-            draw.text((6, 42), f"Peilung: {bearing:.1f}°", font=font, fill="white")
+    try:
+        while True:
+            meters = calculate_distance(TARGET)
+            bearing = calculate_bearing(TARGET)
 
-        time.sleep(0.5)
+            with canvas(device) as draw:
+                draw.rectangle(device.bounding_box, outline="white", fill="black")
+                draw.text((6, 6),  "Ziel-Distanz:", font=font, fill="white")
+                draw.text((6, 24), f"{meters:.1f} m", font=font, fill="white")
+                draw.text((6, 42), f"Peilung: {bearing:.1f}°", font=font, fill="white")
 
-except KeyboardInterrupt:
-    print("Programm wurde beendet!")
-except Exception as e:
-    print(f"Fehler: {e}")
+            time.sleep(0.5)
+
 
    
