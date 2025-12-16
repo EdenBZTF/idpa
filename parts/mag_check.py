@@ -103,9 +103,9 @@ def main():
                 dump_registers(bus, addr, start=0x00, length=32)
 
         if not found:
-            print("\n⚠️ Kein eindeutig unterstützter Magnetometer erkannt.")
-            print("→ Viele GY            print("→ Viele GY-273 sind QMC5883L (meist 0x0D).")
-            print("→ Dein Modul auf 0x2C könnte ein anderer Chip sein. Sende mir bitte Fotos/Board-Label.")
+            print("ein eindeutig unterstützter Magnetometer erkannt.")
+            print("Viele GY-273 sind QMC5883L (meist 0x0D).")
+            print("Dein Modul auf 0x2C könnte ein anderer Chip sein. Sende mir bitte Fotos/Board-Label.")
 
 if __name__ == "__main__":
     main()
