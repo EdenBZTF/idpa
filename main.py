@@ -1,4 +1,4 @@
-from parts import Location, calculate, Gps, stepper, Compass, display
+from parts import Location, calculate, Gps, stepper, compass, display
 import requests
 import time
 
