@@ -1,6 +1,6 @@
 import math
 from geopy.distance import geodesic
-from Gps import get_current_location
+from .Gps import get_current_location
 
 def calculate_distance(cords):
     my_location = get_current_location()
