@@ -4,7 +4,7 @@ class MockCompass:
 
 class MockGPS:
     def read(self):
-        return {"latitude": 47.55702056936907, "longitude": 8.891574232825205, "altitude": 500, "satellites": 7} #bztf
+        return {"latitude":47.51629566199016, "longitude": 9.438055388669438, "altitude": 500, "satellites": 7} #fpt arbon
 class MockOLED:
     def display_text(self, text):
         print(f"[OLED MOCK] {text}")
@@ -12,3 +12,4 @@ class MockOLED:
 class MockStepper:
     def step(self, steps=1, direction=1):
         print(f"[STEPPER MOCK] Steps: {steps}, Direction: {direction}")
+
