@@ -75,3 +75,4 @@ class QMC5883P:
         try:
             self.bus.close()
         except Exception:
+            pass
