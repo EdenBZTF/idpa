@@ -73,5 +73,5 @@ class QMC5883P:
 
     def close(self):
         try:
-            self.bus.close            self.bus.close()
+            self.bus.close()
         except Exception:
