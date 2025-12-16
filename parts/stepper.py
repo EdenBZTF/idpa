@@ -7,6 +7,10 @@ PINS = [17, 18, 27, 22]  # ULN2003 IN1..IN4
 GPIO.setmode(GPIO.BCM)
 for p in PINS:
     GPIO.setup(p, GPIO.OUT, initial=GPIO.LOW)
+    
+
+STEPS_PER_REV = 4096  # Half-Step
+
 
 # Half-Step Sequenz (8 Muster)
 HALF_STEP_SEQ = [

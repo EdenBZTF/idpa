@@ -14,7 +14,7 @@ from .calculate import calculate_distance, calculate_bearing
 
 def draw_OLED():
 
-    TARGET = get_current_location() #bztf?
+    TARGET = (47.49853522404578, 9.418950564036795) #mc arbon
 
     serial = i2c(port=1, address=0x3C)  # SH1106 ist oft auch 0x3C
     try:

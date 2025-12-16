@@ -3,7 +3,7 @@ from geopy.distance import geodesic
 from .Gps import get_current_location
 
 def calculate_distance(cords):
-    my_location = get_current_location()
+    my_location = get_current_location() #bztf
     return round(geodesic(my_location, cords).meters, 1)
 
 def calculate_bearing(target_coords):

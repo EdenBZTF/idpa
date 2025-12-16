@@ -4,7 +4,7 @@ class MockCompass:
 
 class MockGPS:
     def read(self):
-        return {"latitude": 47.55702056936907, "longitude": 8.891574232825205, "altitude": 500, "satellites": 7}
+        return {"latitude": 47.55702056936907, "longitude": 8.891574232825205, "altitude": 500, "satellites": 7} #bztf
 class MockOLED:
     def display_text(self, text):
         print(f"[OLED MOCK] {text}")
