@@ -1,0 +1,41 @@
+from parts import Location, calculate, Gps, stepper, compass, display
+import requests
+import time
+
+AMENITY_URL = "http://127.0.0.1:5000/get_amenity"   
+
+def get_current_amenity():
+    try:
+        r = requests.get(AMENITY_URL, timeout=2)
+        if r.status_code == 200:
+            return r.json().get("amenity")
+    except Exception as e:
+        print("Error fetching amenity:", e)
+    return None
+
+def main():
+    try:
+        while True:
+            print('pre 1')
+            current = 'bar'
+            print("Current amenity:", current)
+            print('pre 2')
+            coords = Location.get_nearest_amenity(current)
+            location_now = Gps.get_current_location()
+            print("Coordinates of next bar:", coords)
+            print("Coordinates of me":, location_now)
+            if coords:
+                print('pre 3')
+                dist = calculate.calculate_distance(coords)
+                print("Distance:", dist)
+                bearing = calculate.calculate_bearing(coords)
+                print("bearing:", bearing)
+                display.draw_OLED(dist, bearing)
+                print("Drehe um: ", bearing)
+                stepper.rotate_degrees(bearing, 1000)
+            time.sleep(3)
+    except Exception as e:
+        print(e)
+
+if __name__ == '__main__':
+    main()
