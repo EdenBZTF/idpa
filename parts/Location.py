@@ -8,7 +8,7 @@ def get_nearest_amenity(amenity):
     query = f"""
     [out:json];
     node["amenity"="{amenity}"](around:1000,{my_location[0]},{my_location[1]});
-    out;
+    out skel;
     """
 
     url = "https://overpass.osm.ch/api/interpreter"

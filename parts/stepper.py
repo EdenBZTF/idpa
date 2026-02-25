@@ -36,7 +36,7 @@ def step_sequence(n_steps, delay_s=0.001, direction=1):
         idx = (idx + 1) % len(seq)
 
 
-def rotate_degrees(deg, speed_hz=1000):
+def rotate_degrees(deg, speed_hz=300):
     """Dreht um deg Grad (positiv=vorwärts, negativ=rückwärts)."""
     direction = 1 if deg >= 0 else -1
     steps = int(abs(deg) * STEPS_PER_REV / 360.0)

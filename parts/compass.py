@@ -52,7 +52,7 @@ def get_heading():
     Hinweis: je nach Einbaulage evtl. atan2(-y, x) o. Achsen tauschen.
     """
     x, y, _ = get_raw_magnet()
-    angle_rad = math.atan2(y, x)
+    angle_rad = math.atan2(x, y)
     angle_deg = math.degrees(angle_rad)
     return (angle_deg + 360) % 360
     

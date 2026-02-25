@@ -12,7 +12,7 @@ from .Gps import get_current_location
 
 from .calculate import calculate_distance, calculate_bearing
 
-def draw_OLED(distance, bearing):
+def draw_OLED(distance, amenity):
 
     serial = i2c(port=1, address=0x3C)  # SH1106 ist oft auch 0x3C
     try:
@@ -30,7 +30,7 @@ def draw_OLED(distance, bearing):
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((6, 6),  "Ziel-Distanz:", font=font, fill="white")
         draw.text((6, 24), f"{distance:.1f} m", font=font, fill="white")
-        draw.text((6, 42), f"Peilung: {bearing:.1f}°", font=font, fill="white")
+        draw.text((6, 42), f"Ziel: {amenity}", font=font, fill="white")
 
 
 
